@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game - Play Against AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chess Game</h1>
+            <p class="subtitle">Play against AI - <span id="current-elo">1000</span> Elo</p>
+        </div>
+
+        <div class="game-container">
+            <div class="sidebar">
+                <div class="info-panel">
+                    <h2>Game Info</h2>
+                    <div class="status">
+                        <p><strong>Turn:</strong> <span id="turn">White</span></p>
+                        <p><strong>Status:</strong> <span id="status">Playing</span></p>
+                    </div>
+
+                    <div class="timer-display">
+                        <h3>AI Thinking Time</h3>
+                        <div class="timer-bar-container">
+                            <div id="timer-bar" class="timer-bar"></div>
+                        </div>
+                        <p class="timer-text">
+                            <span id="timer-current">0.0</span>s / <span id="timer-max">10.0</span>s
+                        </p>
+                    </div>
+
+                    <div class="captured">
+                        <h3>Captured Pieces</h3>
+                        <div class="captured-white">
+                            <strong>Black captured:</strong>
+                            <div id="captured-white"></div>
+                        </div>
+                        <div class="captured-black">
+                            <strong>White captured:</strong>
+                            <div id="captured-black"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="new-game" class="btn">New Game</button>
+                    <button id="undo-move" class="btn">Undo Move</button>
+
+                    <div class="elo-selection">
+                        <h3>AI Difficulty (Elo)</h3>
+                        <div class="elo-buttons">
+                            <button class="elo-btn" data-elo="500">500</button>
+                            <button class="elo-btn" data-elo="750">750</button>
+                            <button class="elo-btn active" data-elo="1000">1000</button>
+                            <button class="elo-btn" data-elo="1250">1250</button>
+                            <button class="elo-btn" data-elo="1500">1500</button>
+                            <button class="elo-btn" data-elo="1750">1750</button>
+                            <button class="elo-btn" data-elo="2000">2000</button>
+                            <button class="elo-btn" data-elo="2250">2250</button>
+                        </div>
+                    </div>
+
+                    <div class="color-selection">
+                        <label>
+                            <input type="radio" name="player-color" value="white" checked>
+                            Play as White
+                        </label>
+                        <label>
+                            <input type="radio" name="player-color" value="black">
+                            Play as Black
+                        </label>
+                    </div>
+                </div>
+
+                <div class="move-history">
+                    <h3>Move History</h3>
+                    <div id="history"></div>
+                </div>
+            </div>
+
+            <div class="board-container">
+                <div id="chessboard"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chess.js"></script>
+</body>
+</html>
