@@ -73,6 +73,8 @@ class ChessGame {
             white: { kingside: true, queenside: true },
             black: { kingside: true, queenside: true }
         };
+        this.transpositionTable = new Map(); // Cache for position evaluations
+        this.killerMoves = []; // Store good moves for move ordering
 
         this.initializeBoard();
         this.attachEventListeners();
@@ -597,7 +599,8 @@ class ChessGame {
                 randomness: 0.95,         // 95% completely random
                 timePerMove: 300,
                 positionWeight: 0.0,
-                mobilityWeight: 0.0
+                mobilityWeight: 0.0,
+                useQuiescence: false
             },
             // 750 Elo: Beginner - terrible but tries a bit
             750: {
@@ -605,55 +608,62 @@ class ChessGame {
                 randomness: 0.80,        // 80% picks bad moves
                 timePerMove: 500,
                 positionWeight: 0.0,
-                mobilityWeight: 0.0
+                mobilityWeight: 0.0,
+                useQuiescence: false
             },
             // 1000 Elo: Weak - sees simple tactics
             1000: {
-                searchDepth: 1,
+                searchDepth: 2,
                 randomness: 0.60,        // 60% picks suboptimal
                 timePerMove: 1000,
                 positionWeight: 0.1,
-                mobilityWeight: 0.0
+                mobilityWeight: 0.0,
+                useQuiescence: false
             },
             // 1250 Elo: Improving - 2-move tactics
             1250: {
-                searchDepth: 2,
+                searchDepth: 3,
                 randomness: 0.40,        // 40% mistakes
                 timePerMove: 2000,
                 positionWeight: 0.3,
-                mobilityWeight: 0.1
+                mobilityWeight: 0.1,
+                useQuiescence: true
             },
             // 1500 Elo: Intermediate
             1500: {
-                searchDepth: 2,
+                searchDepth: 4,
                 randomness: 0.25,        // 25% mistakes
                 timePerMove: 3000,
                 positionWeight: 0.5,
-                mobilityWeight: 0.2
+                mobilityWeight: 0.2,
+                useQuiescence: true
             },
             // 1750 Elo: Good player
             1750: {
-                searchDepth: 3,
+                searchDepth: 5,
                 randomness: 0.15,        // 15% mistakes
                 timePerMove: 4000,
                 positionWeight: 0.7,
-                mobilityWeight: 0.3
+                mobilityWeight: 0.3,
+                useQuiescence: true
             },
             // 2000 Elo: Strong
             2000: {
-                searchDepth: 3,
+                searchDepth: 6,
                 randomness: 0.08,        // 8% mistakes
                 timePerMove: 5000,
                 positionWeight: 1.0,
-                mobilityWeight: 0.4
+                mobilityWeight: 0.4,
+                useQuiescence: true
             },
             // 2250 Elo: Master
             2250: {
-                searchDepth: 4,
+                searchDepth: 7,
                 randomness: 0.03,        // 3% mistakes
                 timePerMove: 7000,
                 positionWeight: 1.2,
-                mobilityWeight: 0.5
+                mobilityWeight: 0.5,
+                useQuiescence: true
             }
         };
         return settings[this.aiElo] || settings[1000];
@@ -684,14 +694,26 @@ class ChessGame {
             return;
         }
 
-        // Play a good move - evaluate with chunked processing
-        const evaluatedMoves = [];
-        let moveIndex = 0;
+        // Clear transposition table for new search
+        this.transpositionTable.clear();
+        this.nodesSearched = 0;
 
-        const evaluateNextMove = () => {
-            // Process one move
-            if (moveIndex < moves.length && Date.now() < deadline) {
-                const move = moves[moveIndex];
+        // Use iterative deepening - search progressively deeper
+        let bestMove = moves[0];
+        let bestScore = -Infinity;
+
+        // Start with shallow search and go deeper
+        for (let depth = 1; depth <= settings.searchDepth; depth++) {
+            if (Date.now() >= deadline) break;
+
+            // Order moves based on previous iteration
+            const orderedMoves = this.orderMoves(moves, bestMove);
+            let depthBestMove = null;
+            let depthBestScore = -Infinity;
+
+            for (const move of orderedMoves) {
+                if (Date.now() >= deadline) break;
+
                 const piece = this.board[move.fromRow][move.fromCol];
                 const capturedPiece = this.board[move.toRow][move.toCol];
 
@@ -699,10 +721,10 @@ class ChessGame {
                 this.board[move.fromRow][move.fromCol] = null;
 
                 const score = -this.alphaBetaSearch(
-                    settings.searchDepth - 1,
+                    depth - 1,
                     -Infinity,
                     Infinity,
-                    true,
+                    false,
                     settings,
                     deadline
                 );
@@ -710,51 +732,67 @@ class ChessGame {
                 this.board[move.fromRow][move.fromCol] = piece;
                 this.board[move.toRow][move.toCol] = capturedPiece;
 
-                evaluatedMoves.push({ move, score });
-                moveIndex++;
-
-                // Continue with next move (yield to event loop)
-                setTimeout(evaluateNextMove, 0);
-            } else {
-                // Done evaluating all moves
-                if (evaluatedMoves.length === 0) {
-                    callback(moves[0]);
-                    return;
+                if (score > depthBestScore) {
+                    depthBestScore = score;
+                    depthBestMove = move;
                 }
-
-                evaluatedMoves.sort((a, b) => b.score - a.score);
-                console.log(`${this.aiElo} Elo: BEST move (score: ${evaluatedMoves[0].score.toFixed(0)})`);
-                callback(evaluatedMoves[0].move);
             }
-        };
 
-        // Start evaluation
-        evaluateNextMove();
+            // Update best move if we completed this depth
+            if (depthBestMove && Date.now() < deadline) {
+                bestMove = depthBestMove;
+                bestScore = depthBestScore;
+                console.log(`${this.aiElo} Elo: Depth ${depth} complete - Best score: ${bestScore.toFixed(0)} - Nodes: ${this.nodesSearched}`);
+            }
+        }
+
+        console.log(`${this.aiElo} Elo: BEST move (score: ${bestScore.toFixed(0)}, nodes: ${this.nodesSearched})`);
+        callback(bestMove);
     }
 
     alphaBetaSearch(depth, alpha, beta, isMaximizing, settings, deadline) {
+        this.nodesSearched++;
+
         // Check time
         if (Date.now() >= deadline) {
             return this.quickEval(settings);
         }
 
+        // Check transposition table
+        const boardKey = this.getBoardHash();
+        const ttEntry = this.transpositionTable.get(boardKey);
+        if (ttEntry && ttEntry.depth >= depth) {
+            return ttEntry.score;
+        }
+
+        // At leaf nodes, use quiescence search if enabled
         if (depth === 0) {
-            return this.evaluatePosition(settings);
+            const score = settings.useQuiescence ?
+                this.quiescenceSearch(alpha, beta, isMaximizing, settings, deadline, 0) :
+                this.evaluatePosition(settings);
+
+            // Store in transposition table
+            this.transpositionTable.set(boardKey, { score, depth });
+            return score;
         }
 
         const color = isMaximizing ? this.aiColor : (this.aiColor === 'white' ? 'black' : 'white');
         const moves = this.getAllValidMoves(color);
 
         if (moves.length === 0) {
-            if (this.isInCheck(color)) {
-                return isMaximizing ? -999999 : 999999;
-            }
-            return 0; // Stalemate
+            const score = this.isInCheck(color) ?
+                (isMaximizing ? -999999 : 999999) :
+                0; // Stalemate
+            this.transpositionTable.set(boardKey, { score, depth });
+            return score;
         }
+
+        // Order moves for better alpha-beta pruning
+        const orderedMoves = this.orderMoves(moves);
 
         if (isMaximizing) {
             let maxEval = -Infinity;
-            for (const move of moves) {
+            for (const move of orderedMoves) {
                 if (Date.now() >= deadline) break;
 
                 const piece = this.board[move.fromRow][move.fromCol];
@@ -770,12 +808,14 @@ class ChessGame {
 
                 maxEval = Math.max(maxEval, evaluation);
                 alpha = Math.max(alpha, evaluation);
-                if (beta <= alpha) break;
+                if (beta <= alpha) break; // Beta cutoff
             }
+
+            this.transpositionTable.set(boardKey, { score: maxEval, depth });
             return maxEval;
         } else {
             let minEval = Infinity;
-            for (const move of moves) {
+            for (const move of orderedMoves) {
                 if (Date.now() >= deadline) break;
 
                 const piece = this.board[move.fromRow][move.fromCol];
@@ -791,8 +831,10 @@ class ChessGame {
 
                 minEval = Math.min(minEval, evaluation);
                 beta = Math.min(beta, evaluation);
-                if (beta <= alpha) break;
+                if (beta <= alpha) break; // Alpha cutoff
             }
+
+            this.transpositionTable.set(boardKey, { score: minEval, depth });
             return minEval;
         }
     }
@@ -819,7 +861,6 @@ class ChessGame {
     evaluatePosition(settings) {
         let materialScore = 0;
         let positionScore = 0;
-        let mobilityScore = 0;
 
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
@@ -830,24 +871,61 @@ class ChessGame {
                 const isAI = pieceColor === this.aiColor;
                 const multiplier = isAI ? 1 : -1;
 
-                // Material
+                // Material - most important factor
                 materialScore += PIECE_VALUES[piece] * multiplier;
 
-                // Position (if this level understands it)
-                if (!settings.materialOnly && settings.positionWeight) {
+                // Position bonus (if this level understands it)
+                if (settings.positionWeight && settings.positionWeight > 0) {
                     const posValue = this.getPositionValue(piece, row, col);
                     positionScore += posValue * settings.positionWeight * multiplier;
-                }
-
-                // Mobility (if this level values it)
-                if (settings.mobilityWeight && settings.mobilityWeight > 0) {
-                    const moves = this.getValidMovesForPiece(row, col);
-                    mobilityScore += moves.length * settings.mobilityWeight * 10 * multiplier;
                 }
             }
         }
 
-        return materialScore + positionScore + mobilityScore;
+        // Add king safety evaluation
+        let kingSafety = 0;
+        if (settings.positionWeight && settings.positionWeight > 0.5) {
+            kingSafety = this.evaluateKingSafety();
+        }
+
+        return materialScore + positionScore + kingSafety;
+    }
+
+    evaluateKingSafety() {
+        // Simple king safety: penalize exposed kings
+        let safety = 0;
+
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const piece = this.board[row][col];
+                if (!piece || piece.toLowerCase() !== 'k') continue;
+
+                const pieceColor = this.getPieceColor(piece);
+                const isAI = pieceColor === this.aiColor;
+                const multiplier = isAI ? 1 : -1;
+
+                // Count pieces around king (pawn shield)
+                let shieldCount = 0;
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr === 0 && dc === 0) continue;
+                        const r = row + dr;
+                        const c = col + dc;
+                        if (this.isValidSquare(r, c)) {
+                            const nearby = this.board[r][c];
+                            if (nearby && this.getPieceColor(nearby) === pieceColor) {
+                                shieldCount++;
+                            }
+                        }
+                    }
+                }
+
+                // Bonus for pawn shield
+                safety += shieldCount * 10 * multiplier;
+            }
+        }
+
+        return safety;
     }
 
 
@@ -879,6 +957,123 @@ class ChessGame {
             }
         }
         return moves;
+    }
+
+    getBoardHash() {
+        // Simple hash function for transposition table
+        let hash = '';
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                hash += this.board[row][col] || '.';
+            }
+        }
+        return hash;
+    }
+
+    orderMoves(moves, bestMove = null) {
+        // Move ordering for better alpha-beta pruning
+        // 1. Best move from previous iteration
+        // 2. Captures (MVV-LVA: Most Valuable Victim - Least Valuable Attacker)
+        // 3. Checks
+        // 4. Other moves
+
+        const scoredMoves = moves.map(move => {
+            let score = 0;
+
+            // Best move from previous iteration gets highest priority
+            if (bestMove &&
+                move.fromRow === bestMove.fromRow &&
+                move.fromCol === bestMove.fromCol &&
+                move.toRow === bestMove.toRow &&
+                move.toCol === bestMove.toCol) {
+                score += 10000;
+            }
+
+            const targetPiece = this.board[move.toRow][move.toCol];
+            const movingPiece = this.board[move.fromRow][move.fromCol];
+
+            // Captures - order by value of captured piece minus value of attacker
+            if (targetPiece) {
+                score += PIECE_VALUES[targetPiece] - PIECE_VALUES[movingPiece] / 100;
+            }
+
+            // Bonus for center control
+            const centerDistance = Math.abs(3.5 - move.toRow) + Math.abs(3.5 - move.toCol);
+            score += (7 - centerDistance) * 2;
+
+            return { move, score };
+        });
+
+        scoredMoves.sort((a, b) => b.score - a.score);
+        return scoredMoves.map(sm => sm.move);
+    }
+
+    quiescenceSearch(alpha, beta, isMaximizing, settings, deadline, depth) {
+        // Limit quiescence depth to prevent infinite loops
+        if (depth > 4 || Date.now() >= deadline) {
+            return this.evaluatePosition(settings);
+        }
+
+        // Stand pat score
+        const standPat = this.evaluatePosition(settings);
+
+        if (isMaximizing) {
+            if (standPat >= beta) return beta;
+            if (alpha < standPat) alpha = standPat;
+        } else {
+            if (standPat <= alpha) return alpha;
+            if (beta > standPat) beta = standPat;
+        }
+
+        // Only search captures and checks
+        const color = isMaximizing ? this.aiColor : (this.aiColor === 'white' ? 'black' : 'white');
+        const allMoves = this.getAllValidMoves(color);
+        const tacticalMoves = allMoves.filter(move => {
+            // Include captures
+            if (this.board[move.toRow][move.toCol]) return true;
+
+            // Include checks
+            const piece = this.board[move.fromRow][move.fromCol];
+            this.board[move.toRow][move.toCol] = piece;
+            this.board[move.fromRow][move.fromCol] = null;
+            const opponentColor = color === 'white' ? 'black' : 'white';
+            const givesCheck = this.isInCheck(opponentColor);
+            this.board[move.fromRow][move.fromCol] = piece;
+            this.board[move.toRow][move.toCol] = null;
+
+            return givesCheck;
+        });
+
+        if (tacticalMoves.length === 0) {
+            return standPat;
+        }
+
+        const orderedMoves = this.orderMoves(tacticalMoves);
+
+        for (const move of orderedMoves) {
+            if (Date.now() >= deadline) break;
+
+            const piece = this.board[move.fromRow][move.fromCol];
+            const captured = this.board[move.toRow][move.toCol];
+
+            this.board[move.toRow][move.toCol] = piece;
+            this.board[move.fromRow][move.fromCol] = null;
+
+            const score = this.quiescenceSearch(alpha, beta, !isMaximizing, settings, deadline, depth + 1);
+
+            this.board[move.fromRow][move.fromCol] = piece;
+            this.board[move.toRow][move.toCol] = captured;
+
+            if (isMaximizing) {
+                if (score >= beta) return beta;
+                if (score > alpha) alpha = score;
+            } else {
+                if (score <= alpha) return alpha;
+                if (score < beta) beta = score;
+            }
+        }
+
+        return isMaximizing ? alpha : beta;
     }
 
     renderBoard() {
