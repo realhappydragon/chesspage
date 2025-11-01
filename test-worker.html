@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Worker Test</title>
+</head>
+<body>
+    <h1>Web Worker Test</h1>
+    <div id="output"></div>
+    <script>
+        const output = document.getElementById('output');
+
+        function log(msg) {
+            console.log(msg);
+            output.innerHTML += msg + '<br>';
+        }
+
+        log('Testing Web Worker...');
+
+        try {
+            const worker = new Worker('chess-worker.js');
+            log('✓ Worker created successfully');
+
+            worker.onmessage = function(e) {
+                log('✓ Message from worker: ' + JSON.stringify(e.data).substring(0, 100));
+            };
+
+            worker.onerror = function(e) {
+                log('✗ Worker error: ' + e.message + ' at line ' + e.lineno);
+            };
+
+            // Test sending a simple message
+            setTimeout(() => {
+                log('Sending test message to worker...');
+                worker.postMessage({
+                    type: 'search',
+                    board: [
+                        ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+                        ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+                        [null, null, null, null, null, null, null, null],
+                        [null, null, null, null, null, null, null, null],
+                        [null, null, null, null, null, null, null, null],
+                        [null, null, null, null, null, null, null, null],
+                        ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+                        ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+                    ],
+                    settings: {
+                        searchDepth: 1,
+                        mistakeRate: 0.5,
+                        mistakeSizeCp: 200,
+                        timePerMove: 1000,
+                        maxNodes: 50000,
+                        positionWeight: 0.15,
+                        mobilityWeight: 0.05,
+                        pawnStructureWeight: 0.0,
+                        kingSafetyWeight: 0.1,
+                        temperature: 1.0,
+                        softmaxWindow: 50,
+                        useQuiescence: false
+                    },
+                    aiColor: 'black',
+                    currentTurn: 'black',
+                    castlingRights: {
+                        white: { kingside: true, queenside: true },
+                        black: { kingside: true, queenside: true }
+                    },
+                    enPassantTarget: null,
+                    positionHistory: []
+                });
+            }, 100);
+
+        } catch (error) {
+            log('✗ Failed to create worker: ' + error.message);
+        }
+    </script>
+</body>
+</html>
