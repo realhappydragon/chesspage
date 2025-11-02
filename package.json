@@ -1,0 +1,16 @@
+{
+  "name": "chess-learning-app",
+  "version": "1.0.0",
+  "description": "Chess learning application with lessons and skill trees",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["chess", "learning", "education"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
