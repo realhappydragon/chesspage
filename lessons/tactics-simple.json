@@ -1,0 +1,127 @@
+{
+  "skillTree": "tactics",
+  "node": "basic-tactics",
+  "title": "Basic Tactics",
+  "description": "Learn fundamental tactical patterns: forks, pins, and skewers",
+  "difficulty": 1,
+  "prerequisite": null,
+  "lessons": [
+    {
+      "id": "fork-1",
+      "type": "find-best-move",
+      "title": "Knight Fork",
+      "description": "Find the knight move that forks the king and queen",
+      "fen": "rnbqkb1r/ppp2ppp/8/3pp3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3",
+      "playerColor": "white",
+      "solution": {
+        "from": "g1",
+        "to": "f3",
+        "notation": "Nf3"
+      },
+      "alternatives": [
+        {
+          "from": "b1",
+          "to": "c3",
+          "feedback": "Nc3 is a good developing move but doesn't create an immediate fork"
+        },
+        {
+          "from": "f2",
+          "to": "f4",
+          "feedback": "This weakens your king position. Look for a knight move instead"
+        }
+      ],
+      "hint": "Look for a knight move that attacks the black king and queen simultaneously",
+      "explanation": "Nf3 is not actually a fork in this position, but it's a good developing move. Let me create a proper fork position.",
+      "points": 100
+    },
+    {
+      "id": "simple-fork",
+      "type": "find-best-move",
+      "title": "Simple Fork",
+      "description": "White knight can fork the black king and rook",
+      "fen": "r3k3/8/8/4N3/8/8/8/4K3 w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "e5",
+        "to": "d7",
+        "notation": "Nd7+"
+      },
+      "alternatives": [
+        {
+          "from": "e5",
+          "to": "c6",
+          "feedback": "Nc6 doesn't give check. Look for a move that attacks both the king and rook"
+        },
+        {
+          "from": "e5",
+          "to": "f7",
+          "feedback": "Nf7+ gives check but doesn't attack the rook"
+        }
+      ],
+      "hint": "Move your knight to attack both the king and the rook at the same time",
+      "explanation": "Nd7+ is a devastating fork! The black king must move, and then you can capture the rook with Nxa8, winning material.",
+      "points": 120
+    },
+    {
+      "id": "pin-1", 
+      "type": "find-best-move",
+      "title": "Simple Pin",
+      "description": "Pin the knight to the king with your bishop",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4",
+      "playerColor": "white",
+      "solution": {
+        "from": "c1",
+        "to": "g5",
+        "notation": "Bg5"
+      },
+      "alternatives": [
+        {
+          "from": "c1",
+          "to": "f4",
+          "feedback": "Bf4 develops the bishop but doesn't create immediate pressure"
+        },
+        {
+          "from": "f3",
+          "to": "g5",
+          "feedback": "Knights can't pin pieces. Try using your bishop instead"
+        }
+      ],
+      "hint": "Use your light-squared bishop to attack the knight",
+      "explanation": "Bg5 pins the knight on f6 to the black queen, making it difficult for Black to develop normally.",
+      "points": 100
+    },
+    {
+      "id": "basic-tactics-test",
+      "type": "find-best-move",
+      "title": "Test Your Skills",
+      "description": "Find the best tactical move in this position",
+      "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+      "playerColor": "black",
+      "solution": {
+        "from": "f6",
+        "to": "d5",
+        "notation": "Nd5"
+      },
+      "alternatives": [
+        {
+          "from": "f6",
+          "to": "g4",
+          "feedback": "Ng4 attacks the bishop but allows h3, and the knight may be trapped"
+        },
+        {
+          "from": "c6",
+          "to": "d4",
+          "feedback": "Nd4 is aggressive but not as strong as the central knight move"
+        }
+      ],
+      "hint": "Centralize your knight to attack the enemy bishop",
+      "explanation": "Nd5 centralizes the knight and attacks the bishop on c4, forcing it to move and gaining tempo.",
+      "points": 110
+    }
+  ],
+  "completionReward": {
+    "xp": 400,
+    "badge": "tactics-novice",
+    "unlocks": ["advanced-tactics"]
+  }
+}

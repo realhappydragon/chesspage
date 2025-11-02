@@ -1,0 +1,180 @@
+{
+  "skillTree": "endgames",
+  "node": "basic-checkmates",
+  "title": "Basic Checkmates", 
+  "description": "Learn essential checkmate patterns with limited material",
+  "difficulty": 1,
+  "prerequisite": null,
+  "lessons": [
+    {
+      "id": "queen-king-mate-1",
+      "type": "find-best-move",
+      "title": "Queen and King vs King",
+      "description": "Deliver checkmate with queen and king",
+      "fen": "8/8/8/8/8/3QK3/8/7k w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "d3",
+        "to": "d1",
+        "notation": "Qd1+"
+      },
+      "alternatives": [
+        {
+          "from": "d3",
+          "to": "d2",
+          "feedback": "Qd2+ also works but takes longer. Go for the quickest mate"
+        },
+        {
+          "from": "e3",
+          "to": "f4",
+          "feedback": "Don't move the king away. Use the queen to drive the enemy king to the edge"
+        },
+        {
+          "from": "d3",
+          "to": "h3",
+          "feedback": "This doesn't give check. Force the king toward the edge with check"
+        }
+      ],
+      "hint": "Give check to force the black king to the edge of the board",
+      "explanation": "Qd1+ forces the black king to move, driving it toward the edge where checkmate will be easier to achieve. The key is to systematically reduce the enemy king's space.",
+      "points": 100
+    },
+    {
+      "id": "rook-king-mate-1", 
+      "type": "find-best-move",
+      "title": "Rook and King vs King",
+      "description": "Checkmate with rook and king - cut off the king",
+      "fen": "8/8/8/8/8/8/3RK3/7k w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "d2",
+        "to": "d1",
+        "notation": "Rd1#"
+      },
+      "alternatives": [
+        {
+          "from": "d2",
+          "to": "h2",
+          "feedback": "Rh2+ gives check but isn't mate. Look for the finishing move"
+        },
+        {
+          "from": "e2",
+          "to": "f3",
+          "feedback": "Moving the king doesn't help. Use your rook to deliver mate"
+        },
+        {
+          "from": "d2",
+          "to": "d8",
+          "feedback": "This cuts off escape but isn't checkmate yet"
+        }
+      ],
+      "hint": "The black king is trapped. Deliver checkmate with your rook",
+      "explanation": "Rd1# is checkmate! The black king has no escape squares - the white king controls the escape squares, and the rook delivers mate on the back rank.",
+      "points": 120
+    },
+    {
+      "id": "two-rooks-mate-1",
+      "type": "find-best-move",
+      "title": "Two Rooks vs King",
+      "description": "Use the ladder technique to deliver mate",
+      "fen": "8/8/8/8/8/k7/8/R6R w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "a1",
+        "to": "a2",
+        "notation": "Ra2+"
+      },
+      "alternatives": [
+        {
+          "from": "h1",
+          "to": "a1",
+          "feedback": "This doubles rooks but doesn't give check. Be more forcing"
+        },
+        {
+          "from": "h1",
+          "to": "h3",
+          "feedback": "Rh3+ works but the ladder technique with Ra2+ is more systematic"
+        },
+        {
+          "from": "a1",
+          "to": "b1",
+          "feedback": "This doesn't give check. Use the ladder technique"
+        }
+      ],
+      "hint": "Use one rook to give check and drive the king up the board",
+      "explanation": "Ra2+ forces the black king to move up the board. The 'ladder' technique involves alternating rook checks to systematically drive the king to the edge.",
+      "points": 90
+    },
+    {
+      "id": "bishop-knight-mate-1",
+      "type": "find-best-move", 
+      "title": "Bishop and Knight Mate",
+      "description": "Force the king to the corner with the same color as your bishop",
+      "fen": "8/8/8/8/8/1N6/2B5/K6k w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "c2",
+        "to": "d3",
+        "notation": "Bd3"
+      },
+      "alternatives": [
+        {
+          "from": "b3",
+          "to": "d4",
+          "feedback": "Nd4 is good but doesn't cut off as many squares as Bd3"
+        },
+        {
+          "from": "a1",
+          "to": "b2",
+          "feedback": "King moves are important but use your pieces to control key squares first"
+        },
+        {
+          "from": "c2",
+          "to": "f5",
+          "feedback": "Bf5 doesn't help drive the king toward the dark-squared corner"
+        }
+      ],
+      "hint": "Control the key central squares to restrict the black king's movement",
+      "explanation": "Bd3 controls important central squares and works with the knight to drive the king toward the h8 corner (same color as the bishop). This is a complex but beautiful mate pattern.",
+      "points": 150
+    },
+    {
+      "id": "king-pawn-endgame-1",
+      "type": "find-best-move",
+      "title": "King and Pawn vs King",
+      "description": "Promote your pawn while keeping the enemy king at bay",
+      "fen": "8/8/8/8/8/8/k1K5/8 w - - 0 1",
+      "playerColor": "white", 
+      "solution": {
+        "from": "c2",
+        "to": "c3",
+        "notation": "Kc3"
+      },
+      "alternatives": [
+        {
+          "from": "c2",
+          "to": "b3",
+          "feedback": "Kb3 allows Ka3, blocking your pawn. Keep the enemy king away"
+        },
+        {
+          "from": "c2",
+          "to": "d3",
+          "feedback": "Kd3 doesn't support the pawn's advance as directly"
+        },
+        {
+          "from": "c2",
+          "to": "c1",
+          "feedback": "Going backward loses time. Advance with your king"
+        }
+      ],
+      "hint": "Support your pawn's advance by keeping the enemy king away from it",
+      "explanation": "Kc3 supports the pawn's advance to c4, c5, etc. The key principle is that your king must stay in front of the pawn to clear the path to promotion.",
+      "points": 110
+    }
+  ],
+  "completionReward": {
+    "xp": 520,
+    "badge": "endgame-apprentice",
+    "unlocks": ["advanced-endgames", "pawn-endgames"]
+  }
+}

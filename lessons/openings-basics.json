@@ -1,0 +1,177 @@
+{
+  "skillTree": "openings",
+  "node": "opening-principles",
+  "title": "Opening Principles",
+  "description": "Master the fundamental principles of chess openings",
+  "difficulty": 1,
+  "prerequisite": null,
+  "lessons": [
+    {
+      "id": "center-control-1",
+      "type": "find-best-move",
+      "title": "Control the Center",
+      "description": "Make the best opening move to control the center",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "e2",
+        "to": "e4",
+        "notation": "e4"
+      },
+      "alternatives": [
+        {
+          "from": "d2",
+          "to": "d4",
+          "feedback": "Excellent! d4 is also a great central move, equally good as e4"
+        },
+        {
+          "from": "g1",
+          "to": "f3",
+          "feedback": "Nf3 is a good developing move but doesn't control the center as directly"
+        },
+        {
+          "from": "a2",
+          "to": "a4",
+          "feedback": "Edge pawns should generally not be moved early. Focus on center control"
+        }
+      ],
+      "hint": "Move a central pawn two squares forward",
+      "explanation": "e4 controls the central squares d5 and f5, giving your pieces more space and better development opportunities. This is one of the most popular opening moves in chess.",
+      "points": 80
+    },
+    {
+      "id": "development-1",
+      "type": "find-best-move", 
+      "title": "Develop with Purpose",
+      "description": "Develop a piece toward the center",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 2",
+      "playerColor": "white",
+      "solution": {
+        "from": "g1",
+        "to": "f3",
+        "notation": "Nf3"
+      },
+      "alternatives": [
+        {
+          "from": "f1",
+          "to": "c4",
+          "feedback": "Bc4 is good but developing knights before bishops is generally preferred"
+        },
+        {
+          "from": "d1",
+          "to": "h5",
+          "feedback": "Bringing the queen out early is dangerous and violates opening principles"
+        },
+        {
+          "from": "f2",
+          "to": "f4",
+          "feedback": "This weakens your king position. Develop pieces instead"
+        }
+      ],
+      "hint": "Knights before bishops! Develop your kingside knight",
+      "explanation": "Nf3 develops the knight to an active square, attacks the e5 pawn, and prepares castling. Knights are generally developed before bishops in the opening.",
+      "points": 100
+    },
+    {
+      "id": "castle-safety-1",
+      "type": "find-best-move",
+      "title": "King Safety First", 
+      "description": "Get your king to safety",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 4 4",
+      "playerColor": "white",
+      "solution": {
+        "from": "e1",
+        "to": "g1",
+        "notation": "O-O"
+      },
+      "alternatives": [
+        {
+          "from": "d1",
+          "to": "e2",
+          "feedback": "The queen doesn't need to move yet. Focus on king safety"
+        },
+        {
+          "from": "h2",
+          "to": "h3",
+          "feedback": "Pawn moves should wait. Castle your king first"
+        },
+        {
+          "from": "c1",
+          "to": "g5",
+          "feedback": "While developing, castling is more urgent for king safety"
+        }
+      ],
+      "hint": "Castle kingside to put your king in a safe position",
+      "explanation": "O-O (castling) moves the king to safety behind a wall of pawns and brings the rook into the game. King safety is a top priority in the opening.",
+      "points": 120
+    },
+    {
+      "id": "dont-move-twice-1",
+      "type": "multiple-choice",
+      "title": "Don't Move the Same Piece Twice",
+      "description": "Which move violates opening principles?",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 4",
+      "playerColor": "white",
+      "question": "Which of these moves would be a mistake in the opening?",
+      "choices": [
+        {
+          "move": "Bd3",
+          "feedback": "Correct choice - develops a new piece to a good square"
+        },
+        {
+          "move": "Be2", 
+          "feedback": "Good - develops the bishop while preparing to castle"
+        },
+        {
+          "move": "Bb5",
+          "feedback": "Excellent - develops with tempo by attacking the knight"
+        },
+        {
+          "move": "Bb3",
+          "isCorrect": false,
+          "feedback": "This violates the principle of not moving the same piece twice without good reason"
+        }
+      ],
+      "explanation": "Moving the bishop from c4 to b3 wastes time by moving the same piece twice. In the opening, it's better to develop new pieces rather than repositioning already developed ones.",
+      "points": 90
+    },
+    {
+      "id": "opening-trap-1",
+      "type": "find-best-move",
+      "title": "Avoid Opening Traps",
+      "description": "Don't fall for this common opening trap",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 1 4",
+      "playerColor": "black",
+      "solution": {
+        "from": "f8",
+        "to": "e7",
+        "notation": "Be7"
+      },
+      "alternatives": [
+        {
+          "from": "f6",
+          "to": "g4",
+          "feedback": "Ng4 looks tempting but allows a strong response with d4!"
+        },
+        {
+          "from": "f6",
+          "to": "d5",
+          "feedback": "Nd5 is premature and allows Nxd5 followed by d4"
+        },
+        {
+          "from": "g8",
+          "to": "f6",
+          "feedback": "You've already developed this knight. Don't move it again"
+        }
+      ],
+      "hint": "Develop your kingside bishop and prepare to castle",
+      "explanation": "Be7 safely develops the bishop and prepares castling. Other knight moves like Ng4 allow White to gain tempo with d4, winning time in development.",
+      "points": 110
+    }
+  ],
+  "completionReward": {
+    "xp": 450,
+    "badge": "opening-student", 
+    "unlocks": ["italian-game", "spanish-opening"]
+  }
+}

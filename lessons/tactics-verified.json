@@ -1,0 +1,155 @@
+{
+  "skillTree": "tactics",
+  "node": "basic-tactics",
+  "title": "Basic Tactics",
+  "description": "Learn fundamental tactical patterns: forks, pins, and skewers",
+  "difficulty": 1,
+  "prerequisite": null,
+  "lessons": [
+    {
+      "id": "knight-fork-1",
+      "type": "find-best-move",
+      "title": "Knight Fork - King and Rook",
+      "description": "White knight can fork the black king and rook",
+      "fen": "r3k3/8/8/4N3/8/8/8/4K3 w - - 0 1",
+      "playerColor": "white",
+      "solution": {
+        "from": "e5",
+        "to": "d7",
+        "notation": "Nd7+"
+      },
+      "alternatives": [
+        {
+          "from": "e5",
+          "to": "c6",
+          "feedback": "Nc6 doesn't give check. Look for a move that attacks both the king and rook"
+        },
+        {
+          "from": "e5",
+          "to": "f7",
+          "feedback": "Nf7+ gives check but doesn't attack the rook"
+        }
+      ],
+      "hint": "Move your knight to give check while also attacking the rook",
+      "explanation": "Nd7+ is a devastating fork! The black king must move, and then you can capture the rook with Nxa8, winning material.",
+      "points": 120
+    },
+    {
+      "id": "knight-fork-2",
+      "type": "find-best-move",
+      "title": "Knight Fork - King and Queen",
+      "description": "Black knight can fork the white king and queen",
+      "fen": "4k3/8/8/8/3n4/8/8/R2QK3 b - - 0 1",
+      "playerColor": "black",
+      "solution": {
+        "from": "d4",
+        "to": "c2",
+        "notation": "Nc2+"
+      },
+      "alternatives": [
+        {
+          "from": "d4",
+          "to": "b3",
+          "feedback": "Nb3 attacks the queen but doesn't give check"
+        },
+        {
+          "from": "d4",
+          "to": "e2",
+          "feedback": "Ne2+ gives check but doesn't attack the queen"
+        }
+      ],
+      "hint": "Find the square where your knight gives check and attacks the queen",
+      "explanation": "Nc2+ forks the king and queen! White must move the king, allowing you to capture the queen with Nxd1.",
+      "points": 150
+    },
+    {
+      "id": "bishop-pin",
+      "type": "find-best-move", 
+      "title": "Bishop Pin",
+      "description": "Pin the knight to the king with your bishop",
+      "fen": "r1bqk2r/pppp1ppp/2n2n2/8/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+      "playerColor": "white",
+      "solution": {
+        "from": "c1",
+        "to": "g5",
+        "notation": "Bg5"
+      },
+      "alternatives": [
+        {
+          "from": "c1",
+          "to": "f4",
+          "feedback": "Bf4 develops the bishop but doesn't create a pin"
+        },
+        {
+          "from": "c4",
+          "to": "d5",
+          "feedback": "Bd5 is active but doesn't pin anything"
+        }
+      ],
+      "hint": "Use your light-squared bishop to attack the knight on f6",
+      "explanation": "Bg5 pins the knight on f6 to the black queen on d8. The knight cannot move without exposing the queen to capture.",
+      "points": 100
+    },
+    {
+      "id": "rook-skewer",
+      "type": "find-best-move",
+      "title": "Rook Skewer",
+      "description": "Use your rook to skewer the king and queen",
+      "fen": "4k3/8/8/8/8/8/4q3/4R2K b - - 0 1",
+      "playerColor": "black",
+      "solution": {
+        "from": "e2",
+        "to": "e1",
+        "notation": "Qe1+"
+      },
+      "alternatives": [
+        {
+          "from": "e2",
+          "to": "a2",
+          "feedback": "Qa2 doesn't give check. Look for a move that forces the king to move"
+        },
+        {
+          "from": "e2",
+          "to": "h2",
+          "feedback": "Qh2+ gives check but doesn't create a skewer"
+        }
+      ],
+      "hint": "Give check on the same line as the white rook",
+      "explanation": "Qe1+ skewers the king and rook! The king must move, and then you can capture the rook with Qxe1.",
+      "points": 130
+    },
+    {
+      "id": "pawn-fork",
+      "type": "find-best-move",
+      "title": "Pawn Fork", 
+      "description": "Use a pawn to fork two pieces",
+      "fen": "rnbqkb1r/ppp2ppp/8/3pp3/2B1P3/2N2N2/PPPP1PPP/R1BQK2R b KQkq - 0 4",
+      "playerColor": "black",
+      "solution": {
+        "from": "d5",
+        "to": "d4",
+        "notation": "d4"
+      },
+      "alternatives": [
+        {
+          "from": "e5",
+          "to": "e4",
+          "feedback": "e4 attacks the knight but allows it to simply move away"
+        },
+        {
+          "from": "d5",
+          "to": "c4",
+          "feedback": "That's not a legal pawn move - pawns capture diagonally"
+        }
+      ],
+      "hint": "Push your central pawn to attack two white pieces at once",
+      "explanation": "d4 forks the bishop on c4 and the knight on c3! White cannot save both pieces and will lose material.",
+      "points": 90
+    }
+  ],
+  "completionReward": {
+    "xp": 500,
+    "badge": "tactics-master",
+    "unlocks": ["advanced-tactics"]
+  }
+}

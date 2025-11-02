@@ -121,6 +121,11 @@ class ChessGame {
         };
         // OPTIMIZATION: Position history for repetition detection
         this.positionHistory = [];
+        
+        // Lesson mode properties
+        this.lessonMode = false;
+        this.lessonEngine = null;
+        this.currentBoardElement = 'chessboard';
 
         // WEB WORKER: Initialize AI worker for background search
         this.workerReady = false;
@@ -151,6 +156,9 @@ class ChessGame {
 
         this.initializeBoard();
         this.attachEventListeners();
+        
+        // Initialize lesson mode components
+        this.initializeLessonMode();
     }
 
     handleWorkerMessage(e) {
@@ -188,7 +196,8 @@ class ChessGame {
     }
 
     initializeBoard() {
-        const boardElement = document.getElementById('chessboard');
+        const boardElement = document.getElementById(this.currentBoardElement);
+        if (!boardElement) return;
         boardElement.innerHTML = '';
 
         for (let row = 0; row < 8; row++) {
@@ -213,7 +222,15 @@ class ChessGame {
     }
 
     handleSquareClick(row, col) {
-        if (this.gameOver || this.currentTurn !== this.playerColor) return;
+        if (this.gameOver) return;
+        
+        // Handle lesson mode differently
+        if (this.lessonMode) {
+            this.handleLessonSquareClick(row, col);
+            return;
+        }
+        
+        if (this.currentTurn !== this.playerColor) return;
 
         const piece = this.board[row][col];
 
@@ -850,7 +867,9 @@ class ChessGame {
     // UI FUNCTIONS BELOW THIS LINE
 
     renderBoard() {
-        const squares = document.querySelectorAll('.square');
+        const boardElement = document.getElementById(this.currentBoardElement);
+        if (!boardElement) return;
+        const squares = boardElement.querySelectorAll('.square');
         squares.forEach(square => {
             const row = parseInt(square.dataset.row);
             const col = parseInt(square.dataset.col);
@@ -983,8 +1002,14 @@ class ChessGame {
     }
 
     attachEventListeners() {
-        document.getElementById('new-game').addEventListener('click', () => this.newGame());
-        document.getElementById('undo-move').addEventListener('click', () => this.undoMove());
+        // Mode selector
+        document.getElementById('learn-mode')?.addEventListener('click', () => this.switchToLearnMode());
+        document.getElementById('practice-mode')?.addEventListener('click', () => this.switchToPracticeMode());
+        document.getElementById('play-mode')?.addEventListener('click', () => this.switchToPlayMode());
+        
+        // Game controls (only if elements exist)
+        document.getElementById('new-game')?.addEventListener('click', () => this.newGame());
+        document.getElementById('undo-move')?.addEventListener('click', () => this.undoMove());
 
         // Elo selection buttons
         document.querySelectorAll('.elo-btn').forEach(btn => {
@@ -1001,6 +1026,9 @@ class ChessGame {
                 this.newGame();
             });
         });
+        
+        // Lesson controls
+        this.attachLessonEventListeners();
     }
 }
 

@@ -389,6 +389,507 @@ body {
     z-index: 1000;
 }
 
+/* Mode Selector */
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.mode-btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #667eea;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mode-btn.active,
+.mode-btn:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Skill Tree Styles */
+.skill-tree-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.skill-tree-header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.progress-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.xp-bar {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.xp-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    transition: width 0.5s ease;
+}
+
+.xp-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+}
+
+.skill-tree-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.skill-tree-tab {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.8;
+}
+
+.skill-tree-tab.active,
+.skill-tree-tab:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skill-tree-content {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tree-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.tree-header h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.tree-visualization {
+    margin: 0 auto;
+    overflow: auto;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background: #fafafa;
+}
+
+.skill-node {
+    position: absolute;
+    width: 100px;
+    height: 120px;
+    background: white;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 8px;
+}
+
+.skill-node.available {
+    border-color: #3498db;
+    background: linear-gradient(135deg, #fff 0%, #f0f8ff 100%);
+}
+
+.skill-node.available:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+    border-color: #2980b9;
+}
+
+.skill-node.completed {
+    border-color: #27ae60;
+    background: linear-gradient(135deg, #d5f4e6 0%, #a8e6cf 100%);
+}
+
+.skill-node.locked {
+    border-color: #95a5a6;
+    background: #f8f9fa;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.node-icon {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.node-title {
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: #333;
+}
+
+.node-description {
+    font-size: 0.7em;
+    color: #666;
+    line-height: 1.2;
+}
+
+.progress-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: #f39c12;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/* Lesson View Styles */
+.lesson-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.lesson-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-back {
+    padding: 10px 15px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.btn-back:hover {
+    background: #5a67d8;
+    transform: translateX(-3px);
+}
+
+.lesson-info {
+    flex: 1;
+}
+
+.lesson-info h2 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.lesson-info p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.lesson-progress {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.lesson-content {
+    display: flex;
+    gap: 30px;
+}
+
+.lesson-sidebar {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lesson-instructions,
+.lesson-hint,
+.lesson-feedback {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-instructions h3,
+.lesson-hint h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.btn-hint {
+    padding: 8px 16px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+.btn-hint:hover {
+    background: #e67e22;
+}
+
+.feedback-success {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #d5f4e6;
+    border: 2px solid #27ae60;
+    border-radius: 8px;
+}
+
+.feedback-error {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #fdeaea;
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+}
+
+.feedback-icon {
+    font-size: 2em;
+}
+
+.feedback-text h4 {
+    margin-bottom: 5px;
+}
+
+.points-earned {
+    background: #f39c12;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.lesson-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-nav {
+    padding: 8px 16px;
+    background: #ecf0f1;
+    color: #555;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-nav:hover:not(:disabled) {
+    background: #d5dbdb;
+}
+
+.btn-nav:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.lesson-board {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#lesson-chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 80px);
+    grid-template-rows: repeat(8, 80px);
+    border: 3px solid #333;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background: white;
+}
+
+.lesson-complete {
+    text-align: center;
+    padding: 30px;
+}
+
+.complete-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.complete-text h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #27ae60;
+}
+
+/* Achievement Notification */
+.achievement-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: 3px solid #f39c12;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+}
+
+.achievement-popup.show {
+    transform: translateX(0);
+}
+
+.achievement-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.achievement-icon {
+    font-size: 3em;
+}
+
+.achievement-text h3 {
+    margin-bottom: 5px;
+    color: #f39c12;
+}
+
+.achievement-text p {
+    color: #666;
+    margin: 0;
+}
+
 @media (max-width: 768px) {
     .game-container {
         flex-direction: column;
@@ -407,5 +908,60 @@ body {
 
     .header h1 {
         font-size: 2em;
+    }
+
+    .lesson-content {
+        flex-direction: column;
+    }
+
+    .lesson-sidebar {
+        width: 100%;
+        order: 2;
+    }
+
+    .lesson-board {
+        order: 1;
+    }
+
+    #lesson-chessboard {
+        grid-template-columns: repeat(8, 45px);
+        grid-template-rows: repeat(8, 45px);
+    }
+
+    .skill-tree-tabs {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .skill-tree-tab {
+        font-size: 0.9em;
+        padding: 10px 15px;
+    }
+
+    .tree-visualization {
+        overflow-x: auto;
+    }
+
+    .skill-node {
+        width: 80px;
+        height: 100px;
+    }
+
+    .node-title {
+        font-size: 0.7em;
+    }
+
+    .node-description {
+        font-size: 0.6em;
+    }
+
+    .achievement-popup {
+        right: 10px;
+        left: 10px;
+        transform: translateY(-200px);
+    }
+
+    .achievement-popup.show {
+        transform: translateY(0);
     }
 }

@@ -1,0 +1,198 @@
+{
+  "tactics": {
+    "id": "tactics",
+    "name": "Tactics",
+    "description": "Master tactical patterns and combinations",
+    "color": "#e74c3c",
+    "icon": "⚔️",
+    "nodes": [
+      {
+        "id": "basic-tactics",
+        "name": "Basic Tactics", 
+        "description": "Forks, pins, skewers",
+        "x": 100,
+        "y": 200,
+        "prerequisite": null,
+        "lessonFile": "tactics-verified.json",
+        "status": "available"
+      },
+      {
+        "id": "advanced-tactics",
+        "name": "Advanced Tactics",
+        "description": "Deflection, decoy, x-ray",
+        "x": 300,
+        "y": 200, 
+        "prerequisite": "basic-tactics",
+        "lessonFile": "tactics-advanced.json",
+        "status": "locked"
+      },
+      {
+        "id": "tactical-combinations",
+        "name": "Tactical Combinations",
+        "description": "Multi-move tactical sequences",
+        "x": 500,
+        "y": 200,
+        "prerequisite": "advanced-tactics",
+        "lessonFile": "tactics-combinations.json", 
+        "status": "locked"
+      },
+      {
+        "id": "sacrifice-tactics",
+        "name": "Sacrificial Tactics",
+        "description": "Material sacrifices for advantage",
+        "x": 300,
+        "y": 350,
+        "prerequisite": "advanced-tactics",
+        "lessonFile": "tactics-sacrifices.json",
+        "status": "locked"
+      }
+    ]
+  },
+  "openings": {
+    "id": "openings", 
+    "name": "Openings",
+    "description": "Learn opening principles and popular systems",
+    "color": "#3498db",
+    "icon": "🏁",
+    "nodes": [
+      {
+        "id": "opening-principles",
+        "name": "Opening Principles",
+        "description": "Center, development, king safety",
+        "x": 100,
+        "y": 200,
+        "prerequisite": null,
+        "lessonFile": "openings-basics.json",
+        "status": "available"
+      },
+      {
+        "id": "italian-game",
+        "name": "Italian Game", 
+        "description": "1.e4 e5 2.Nf3 Nc6 3.Bc4",
+        "x": 250,
+        "y": 120,
+        "prerequisite": "opening-principles",
+        "lessonFile": "openings-italian.json",
+        "status": "locked"
+      },
+      {
+        "id": "spanish-opening",
+        "name": "Spanish Opening",
+        "description": "1.e4 e5 2.Nf3 Nc6 3.Bb5",
+        "x": 250,
+        "y": 280,
+        "prerequisite": "opening-principles", 
+        "lessonFile": "openings-spanish.json",
+        "status": "locked"
+      },
+      {
+        "id": "queens-gambit",
+        "name": "Queen's Gambit",
+        "description": "1.d4 d5 2.c4",
+        "x": 400,
+        "y": 200,
+        "prerequisite": ["italian-game", "spanish-opening"],
+        "lessonFile": "openings-queens-gambit.json",
+        "status": "locked"
+      }
+    ]
+  },
+  "endgames": {
+    "id": "endgames",
+    "name": "Endgames", 
+    "description": "Essential endgame knowledge and technique",
+    "color": "#9b59b6",
+    "icon": "👑",
+    "nodes": [
+      {
+        "id": "basic-checkmates",
+        "name": "Basic Checkmates",
+        "description": "Queen, rook, and bishop+knight mates",
+        "x": 100,
+        "y": 200,
+        "prerequisite": null,
+        "lessonFile": "endgames-basic.json",
+        "status": "available"
+      },
+      {
+        "id": "pawn-endgames",
+        "name": "Pawn Endgames",
+        "description": "King and pawn vs king",
+        "x": 300,
+        "y": 120,
+        "prerequisite": "basic-checkmates",
+        "lessonFile": "endgames-pawns.json",
+        "status": "locked"
+      },
+      {
+        "id": "rook-endgames", 
+        "name": "Rook Endgames",
+        "description": "Rook vs pawn, rook vs rook",
+        "x": 300,
+        "y": 280,
+        "prerequisite": "basic-checkmates",
+        "lessonFile": "endgames-rooks.json",
+        "status": "locked"
+      },
+      {
+        "id": "advanced-endgames",
+        "name": "Advanced Endgames",
+        "description": "Complex endgame positions",
+        "x": 500,
+        "y": 200,
+        "prerequisite": ["pawn-endgames", "rook-endgames"],
+        "lessonFile": "endgames-advanced.json",
+        "status": "locked"
+      }
+    ]
+  },
+  "strategy": {
+    "id": "strategy",
+    "name": "Strategy",
+    "description": "Positional understanding and long-term planning",
+    "color": "#27ae60",
+    "icon": "🧠",
+    "nodes": [
+      {
+        "id": "basic-strategy",
+        "name": "Basic Strategy",
+        "description": "Piece activity, pawn structure",
+        "x": 100,
+        "y": 200,
+        "prerequisite": null,
+        "lessonFile": "strategy-basic.json",
+        "status": "available"
+      },
+      {
+        "id": "pawn-structures",
+        "name": "Pawn Structures", 
+        "description": "Isolated, doubled, passed pawns",
+        "x": 300,
+        "y": 120,
+        "prerequisite": "basic-strategy",
+        "lessonFile": "strategy-pawns.json",
+        "status": "locked"
+      },
+      {
+        "id": "piece-coordination",
+        "name": "Piece Coordination",
+        "description": "Making pieces work together",
+        "x": 300,
+        "y": 280,
+        "prerequisite": "basic-strategy",
+        "lessonFile": "strategy-pieces.json",
+        "status": "locked"
+      },
+      {
+        "id": "planning",
+        "name": "Strategic Planning",
+        "description": "Creating and executing plans",
+        "x": 500,
+        "y": 200,
+        "prerequisite": ["pawn-structures", "piece-coordination"],
+        "lessonFile": "strategy-planning.json",
+        "status": "locked"
+      }
+    ]
+  }
+}

@@ -3,17 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chess Game - Play Against AI</title>
+    <title>Chess Learning - Master Your Skills</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Chess Game</h1>
-            <p class="subtitle">Play against AI - <span id="current-elo">1000</span> Elo</p>
+            <h1>Chess Learning</h1>
+            <p class="subtitle">Master your chess skills - Level <span id="user-level">1</span></p>
+            <div class="mode-selector">
+                <button id="learn-mode" class="mode-btn active">Learn</button>
+                <button id="practice-mode" class="mode-btn">Practice</button>
+                <button id="play-mode" class="mode-btn">Play AI</button>
+            </div>
         </div>
 
-        <div class="game-container">
+        <!-- Skill Tree View -->
+        <div id="skill-tree-view" class="skill-tree-container">
+            <div class="skill-tree-header">
+                <h2>Choose Your Path</h2>
+                <div class="progress-overview">
+                    <div class="xp-bar">
+                        <div class="xp-progress" id="xp-progress"></div>
+                        <span class="xp-text"><span id="current-xp">0</span>/<span id="next-level-xp">100</span> XP</span>
+                    </div>
+                    <div class="stats">
+                        <span>🔥 <span id="streak-count">0</span> day streak</span>
+                        <span>🎯 <span id="accuracy">0</span>% accuracy</span>
+                    </div>
+                </div>
+            </div>
+            <div id="skill-trees"></div>
+        </div>
+
+        <!-- Lesson View -->
+        <div id="lesson-view" class="lesson-container" style="display: none;">
+            <div class="lesson-header">
+                <button id="back-to-tree" class="btn-back">← Back to Skills</button>
+                <div class="lesson-info">
+                    <h2 id="lesson-title">Lesson Title</h2>
+                    <p id="lesson-description">Lesson description</p>
+                    <div class="lesson-progress">
+                        <span id="lesson-number">1</span> of <span id="total-lessons">5</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="lesson-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lesson-content">
+                <div class="lesson-sidebar">
+                    <div class="lesson-instructions">
+                        <h3>Instructions</h3>
+                        <p id="lesson-instructions">Find the best move</p>
+                    </div>
+                    <div class="lesson-hint" id="lesson-hint" style="display: none;">
+                        <h3>💡 Hint</h3>
+                        <p id="hint-text"></p>
+                        <button id="show-hint" class="btn-hint">Show Hint</button>
+                    </div>
+                    <div class="lesson-feedback" id="lesson-feedback" style="display: none;">
+                        <div class="feedback-content" id="feedback-content"></div>
+                        <div class="lesson-actions">
+                            <button id="next-lesson" class="btn btn-primary" style="display: none;">Next Lesson</button>
+                            <button id="try-again" class="btn btn-secondary" style="display: none;">Try Again</button>
+                        </div>
+                    </div>
+                    <div class="lesson-navigation">
+                        <button id="prev-lesson" class="btn-nav" disabled>Previous</button>
+                        <button id="reset-lesson" class="btn-nav">Reset</button>
+                        <button id="skip-lesson" class="btn-nav">Skip</button>
+                    </div>
+                </div>
+                <div class="lesson-board">
+                    <div id="lesson-chessboard"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Container (for AI play mode) -->
+        <div id="game-container" class="game-container" style="display: none;">
             <div class="sidebar">
                 <div class="info-panel">
                     <h2>Game Info</h2>
@@ -87,6 +156,20 @@
         </div>
     </div>
 
-    <script src="chess.js"></script>
+    <!-- Achievement Notification -->
+    <div id="achievement-notification" class="achievement-popup" style="display: none;">
+        <div class="achievement-content">
+            <div class="achievement-icon" id="achievement-icon">🏆</div>
+            <div class="achievement-text">
+                <h3 id="achievement-title">Achievement Unlocked!</h3>
+                <p id="achievement-description">You did something awesome!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="progress-tracker.js"></script>
+    <script src="lesson-engine.js"></script>
+    <script src="chess.js"></script>\n    <script src="chess-learning-extensions.js"></script>
+    <script src="skill-tree.js"></script>\n    <script src="chessboard-fix.js"></script>
 </body>
 </html>

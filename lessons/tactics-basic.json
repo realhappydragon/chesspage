@@ -1,0 +1,155 @@
+{
+  "skillTree": "tactics",
+  "node": "basic-tactics",
+  "title": "Basic Tactics",
+  "description": "Learn fundamental tactical patterns: forks, pins, and skewers",
+  "difficulty": 1,
+  "prerequisite": null,
+  "lessons": [
+    {
+      "id": "fork-1",
+      "type": "find-best-move",
+      "title": "Knight Fork",
+      "description": "Find the knight move that attacks both the king and rook",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+      "playerColor": "black",
+      "solution": {
+        "from": "f6",
+        "to": "d5",
+        "notation": "Nd5"
+      },
+      "alternatives": [
+        {
+          "from": "f6",
+          "to": "g4",
+          "feedback": "This attacks the bishop but misses the better fork opportunity"
+        },
+        {
+          "from": "f6",
+          "to": "h5",
+          "feedback": "This move doesn't accomplish much. Look for a move that attacks multiple pieces"
+        }
+      ],
+      "hint": "Look for a central square where your knight can attack both the bishop and another piece",
+      "explanation": "Nd5 is a powerful fork, attacking both the bishop on c4 and giving check to the king. This forces White to move the king, allowing you to capture the bishop on the next move.",
+      "points": 100
+    },
+    {
+      "id": "pin-1", 
+      "type": "find-best-move",
+      "title": "Bishop Pin",
+      "description": "Use your bishop to pin the knight to the king",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 2 3",
+      "playerColor": "white",
+      "solution": {
+        "from": "c1",
+        "to": "g5",
+        "notation": "Bg5"
+      },
+      "alternatives": [
+        {
+          "from": "c1",
+          "to": "f4",
+          "feedback": "This develops the bishop but doesn't create immediate pressure"
+        },
+        {
+          "from": "f3",
+          "to": "g5",
+          "feedback": "Knights can't pin pieces. Try using your bishop instead"
+        }
+      ],
+      "hint": "Look for a way to attack the knight while making it difficult to move",
+      "explanation": "Bg5 pins the knight on f6 to the black queen, making it difficult for Black to develop normally. If the knight moves, Black loses the queen.",
+      "points": 100
+    },
+    {
+      "id": "skewer-1",
+      "type": "find-best-move", 
+      "title": "Rook Skewer",
+      "description": "Use your rook to skewer the king and queen",
+      "fen": "r3k2r/ppp2ppp/2n5/2bPp3/2B5/8/PPP2PPP/R3K2R w KQkq - 0 10",
+      "playerColor": "white",
+      "solution": {
+        "from": "a1",
+        "to": "a8",
+        "notation": "Ra8+"
+      },
+      "alternatives": [
+        {
+          "from": "h1",
+          "to": "h8",
+          "feedback": "This isn't check. Look for a move that forces the king to move"
+        },
+        {
+          "from": "a1",
+          "to": "a7",
+          "feedback": "Close! But you can do better by giving check"
+        }
+      ],
+      "hint": "Give check with your rook on the back rank",
+      "explanation": "Ra8+ is a devastating skewer! The black king must move, and then you can capture the rook on a8 with Rxa8, winning material.",
+      "points": 150
+    },
+    {
+      "id": "discovery-1",
+      "type": "find-best-move",
+      "title": "Discovered Attack", 
+      "description": "Move your knight to unleash a discovered attack",
+      "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 4 4",
+      "playerColor": "white",
+      "solution": {
+        "from": "f3",
+        "to": "g5",
+        "notation": "Ng5"
+      },
+      "alternatives": [
+        {
+          "from": "f3",
+          "to": "h4",
+          "feedback": "This moves the knight but doesn't create a strong discovered attack"
+        },
+        {
+          "from": "f3",
+          "to": "d4",
+          "feedback": "The knight blocks your own pawn. Try a different square"
+        }
+      ],
+      "hint": "Move your knight to attack f7 while uncovering an attack on the bishop",
+      "explanation": "Ng5 creates a double attack! The knight attacks the weak f7 pawn, and moving the knight uncovers your bishop's attack on the bishop on c5.",
+      "points": 120
+    },
+    {
+      "id": "fork-2",
+      "type": "find-best-move",
+      "title": "Pawn Fork",
+      "description": "Use a pawn to fork two pieces",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P4/PPP2PPP/RNBQK1NR w KQkq - 2 4",
+      "playerColor": "white", 
+      "solution": {
+        "from": "d3",
+        "to": "d4",
+        "notation": "d4"
+      },
+      "alternatives": [
+        {
+          "from": "e4",
+          "to": "e5",
+          "feedback": "This attacks the knight but allows it to simply move away"
+        },
+        {
+          "from": "g1",
+          "to": "f3",
+          "feedback": "Development is good but you're missing a tactical opportunity"
+        }
+      ],
+      "hint": "A simple pawn move can attack two pieces at once",
+      "explanation": "d4 forks the bishop on c5 and the pawn on e5, forcing Black to lose material as both pieces cannot be saved.",
+      "points": 80
+    }
+  ],
+  "completionReward": {
+    "xp": 500,
+    "badge": "tactics-novice",
+    "unlocks": ["advanced-tactics"]
+  }
+}
